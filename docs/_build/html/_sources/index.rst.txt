@@ -1,6 +1,6 @@
 python-translator
 =================
-A python library to translate text from one language to another.
+A python library to translate text from one language to another.  
 
 Install
 -------
