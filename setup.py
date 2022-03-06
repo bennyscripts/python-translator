@@ -1,10 +1,29 @@
 from setuptools import setup
 
-readme = open('readme.md').read()
+readme = """
+# python-translator
+A python library to translate text from one language to another.  
+https://python-translator.readthedocs.io/
+
+> ### Install
+> ```bash
+> $ pip install python-translator
+> ```
+
+> ### Example
+> ```python
+> from python_translator import Translator
+> 
+> translator = Translator()
+> result = translator.translate("Hello world!", "spanish", "english")
+> 
+> print(result)
+> ```
+"""
 
 setup(
     name='python-translator',
-    version='1.0.0',
+    version='1.0.1',
     description='Translate text from one language to another.',
     requires=['requests', 'bs4'],
     packages=['python_translator'],
