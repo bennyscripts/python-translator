@@ -1,6 +1,5 @@
 # python-translator
 A python library to translate text from one language to another.  
-https://python-translator.readthedocs.io/
 
 > ### Install
 > ```bash
