@@ -1,11 +1,25 @@
+import urllib.parse
 import requests
 import bs4
 
 from . import lang_codes
 
+
+class Response:
+    def __init__(self, source_language: str, target_language: str, original_text: str, new_text: str):
+        self.source_language = source_language
+        self.target_language = target_language
+        self.original_text = original_text
+        self.new_text = new_text
+    
+    def __repr__(self):
+        return self.new_text
+
 class Translator:
     def __init__(self) -> None:
-        self.BASE_URL = "https://translate.google.com/m?sl={source_lang}&tl={target_lang}&hl={source_lang}&q={text}"
+        self.CLIENT = requests.Session()
+        self.BASE_URL = "https://translate.google.com/m" 
+        # ^^ Params: ?sl={source_lang}&tl={target_lang}&hl={source_lang}&q={text}
 
     def _generate_url(self, source_language: str, target_language: str, text: str) -> str:
         """
@@ -19,8 +33,13 @@ class Translator:
         Returns:
             str : URL for the translation.
         """
-        
-        return self.BASE_URL.format(source_lang=source_language, target_lang=target_language, text=text)
+        _encoded: str = urllib.parse.urlencode({
+            'sl': source_language,
+            'tl': target_language,
+            'hl': source_language,
+            'q':text,
+        })
+        return self.BASE_URL + '?' + _encoded
 
     def translate_text(self, text: str, target_language, source_language: str = "en") -> str:
         """
@@ -36,18 +55,26 @@ class Translator:
             None : If the translation failed.
         """
 
-        if len(source_language) != 2: source_language = lang_codes.convert_to_code(source_language.lower())
-        if len(target_language) != 2: target_language = lang_codes.convert_to_code(target_language.lower())
+        if len(source_language) != 2: 
+            source_language = lang_codes.convert_to_code(source_language.lower())
+        if len(target_language) != 2: 
+            target_language = lang_codes.convert_to_code(target_language.lower())
 
         url = self._generate_url(source_language, target_language, text)
-        response = requests.get(url)
+        response = self.CLIENT.get(url)
         soup = bs4.BeautifulSoup(response.text, "html.parser")
         
         result_container = soup.find("div", {"class": "result-container"})
         
         if result_container:
             translated_text = result_container.text
-            return translated_text
+            return Response(
+                source_language,
+                target_language,
+                text,
+                translated_text
+            ) 
+            translated_text
 
         return None
 
