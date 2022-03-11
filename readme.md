@@ -18,10 +18,3 @@ A python library to translate text from one language to another.
 > 
 > print(result)
 > ```
-
-## Responses
-Returns a `Response` object, containing:
-- source_language
-- target_language
-- original_text
-- new_text: str
