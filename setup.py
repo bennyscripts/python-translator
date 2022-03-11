@@ -5,7 +5,7 @@ with open('readme.md') as f:
 
 setup(
     name='python-translator',
-    version='1.0.1',
+    version='1.0.2',
     description='Translate text from one language to another.',
     requires=['requests', 'bs4'],
     packages=['python_translator'],
