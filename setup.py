@@ -1,11 +1,31 @@
 from setuptools import setup
 
-with open('readme.md') as f:
-    readme = f.read()
+readme = """
+# python-translator
+A python library to translate text from one language to another.  
+
+### Why use this?
+> It uses the Google API, showing the best results. And unlike other repos, does not require an API key to operate.
+
+### Install
+> ```bash
+> $ pip install python-translator
+> ```
+
+> ### Example
+> ```python
+> from python_translator import Translator
+> 
+> translator = Translator()
+> result = translator.translate("Hello world!", "spanish", "english")
+> 
+> print(result)
+> ```
+"""
 
 setup(
     name='python-translator',
-    version='1.0.2',
+    version='1.0.3',
     description='Translate text from one language to another.',
     requires=['requests', 'bs4'],
     packages=['python_translator'],
